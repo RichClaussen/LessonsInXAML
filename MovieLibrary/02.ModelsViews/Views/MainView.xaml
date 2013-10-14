@@ -1,0 +1,16 @@
+﻿<Window x:Class="MovieLibrary.Views.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Movies 'Я' Us"
+        Height="350"
+        Width="525">
+  <DockPanel>
+    <Grid DockPanel.Dock="Top"
+          Margin="5">
+      <Button Content="Change Movies!"
+              Click="OnButtonClicked" />
+    </Grid>
+    <DataGrid ItemsSource="{Binding Movies,
+                            RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" />
+  </DockPanel>
+</Window>

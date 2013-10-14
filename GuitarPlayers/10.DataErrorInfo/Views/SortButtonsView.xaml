@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="GuitarPlayers.Views.SortButtonsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:Controls="clr-namespace:GuitarPlayers.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="50" d:DesignWidth="300">
+  <StackPanel HorizontalAlignment="Center"
+              Orientation="Horizontal">
+    <ListView ItemsSource="{Binding Buttons}"
+              BorderBrush="{x:Null}">
+      <ListView.ItemContainerStyle>
+        <Style TargetType="{x:Type ListViewItem}">
+          <Setter Property="Control.Focusable" Value="False"/>
+        </Style>
+      </ListView.ItemContainerStyle>
+      <ListView.ItemsPanel>
+        <ItemsPanelTemplate>
+          <StackPanel Orientation="Horizontal" />
+        </ItemsPanelTemplate>
+      </ListView.ItemsPanel>
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <Controls:SortByButton Margin="5" Padding="3"
+                                 Command="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                                   Path=DataContext.SortCommand}"
+                                 CommandParameter="{Binding}"
+                                 SortLabel="{Binding RelativeSource={RelativeSource AncestorType=UserControl},
+                                                     Path=DataContext.Resources.SortBy}"
+                                 SortBy="{Binding}" />
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </StackPanel>
+</UserControl>
