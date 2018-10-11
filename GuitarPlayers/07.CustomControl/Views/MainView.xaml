@@ -1,0 +1,75 @@
+﻿<Window x:Class="GuitarPlayers.Views.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Views="clr-namespace:GuitarPlayers.Views"
+        xmlns:ViewModels="clr-namespace:GuitarPlayers.ViewModels"
+        xmlns:Converters="clr-namespace:GuitarPlayers.Converters"
+        Title="{Binding Title}"
+        Height="350" Width="550"
+        Name="TheWindow"
+        MinHeight="250" MinWidth="350">
+  <Window.DataContext>
+    <ViewModels:MainViewModel />
+  </Window.DataContext>
+  <Window.Resources>
+    <Converters:BoolDockConverter x:Key="boolDockConverter" />
+    <Converters:NameConverter x:Key="nameConverter" />
+  </Window.Resources>
+
+  <DockPanel>
+    <StackPanel DockPanel.Dock="Top"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+      <TextBlock Text="Tool Position:"
+                 Margin="5" />
+      <RadioButton GroupName="TopBottom"
+                   Name="dockButton"
+                   Margin="5"
+                   Content="Top" />
+      <RadioButton GroupName="TopBottom"
+                   Margin="5"
+                   IsChecked="True"
+                   Content="Bottom" />
+      <TextBlock Margin="5,5,0,5"
+                 Text="|   H:W - " />
+      <TextBlock Margin="0,5"
+                 Text="{Binding ElementName=TheWindow, Path=Height}" />
+      <TextBlock Margin="0,5"
+                 Text=", " />
+      <TextBlock Margin="0,5"
+                 Text="{Binding ElementName=TheWindow, Path=Width}" />
+    </StackPanel>
+
+    <Views:PlayerDetailView DockPanel.Dock="Right"
+                            Width="200"
+                            Margin="5"
+                            DataContext="{Binding GuitarPlayers}" />
+
+    <Views:SortButtonsView DockPanel.Dock="{Binding ElementName=dockButton,
+                                                    Path=IsChecked,
+                                                    Converter={StaticResource boolDockConverter}}"
+                           DataContext="{Binding SortButtons}"/>
+
+    <ListView Height="Auto"
+              Margin="10,5"
+              IsSynchronizedWithCurrentItem="True"
+              ItemsSource="{Binding GuitarPlayers}">
+      <ListView.View>
+        <GridView>
+          <GridViewColumn Width="150"
+                          Header="Name">
+            <GridViewColumn.DisplayMemberBinding>
+              <MultiBinding Converter="{StaticResource nameConverter}" Mode="OneWay">
+                <Binding Path="FirstName" />
+                <Binding Path="LastName" />
+              </MultiBinding>
+            </GridViewColumn.DisplayMemberBinding>
+          </GridViewColumn>
+          <GridViewColumn Width="100"
+                          Header="Birth Year"
+                          DisplayMemberBinding="{Binding YearOfBirth}" />
+        </GridView>
+      </ListView.View>
+    </ListView>
+  </DockPanel>
+</Window>
