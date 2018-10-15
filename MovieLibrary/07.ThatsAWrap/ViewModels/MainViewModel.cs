@@ -7,7 +7,7 @@ using MovieLibrary.Models;
 
 namespace MovieLibrary.ViewModels
 {
-    public class MainViewModel : ObservableItem
+    public class MainViewModel : ObservableObject
     {
         public ObservableCollection<MovieViewModel> Movies
         {
@@ -15,17 +15,17 @@ namespace MovieLibrary.ViewModels
             private set
             {
                 movies = value;
-                this.OnPropertyChanged(() => Movies);
+                OnPropertyChanged();
             }
         }
 
         public string Notification
         {
-            get { return this.notification; }
+            get { return notification; }
             private set
             {
-                this.notification = value;
-                this.OnPropertyChanged(() => Notification);
+                notification = value;
+                OnPropertyChanged();
             }
         }
 
@@ -38,66 +38,66 @@ namespace MovieLibrary.ViewModels
             // http://stackoverflow.com/questions/327984/wpf-databinding-to-interface-and-not-actual-object-casting-possible
 
             // movies are fun to watch
-            this.Movies = this.GetCrazyAwesomeMovies();
+            Movies = GetCrazyAwesomeMovies();
 
             // this command is special to me
-            this.AddMoviesCommand = new Command
+            AddMoviesCommand = new Command
             {
-                CanExecuteDelegate = ced => this.CanAddMovies(),
-                ExecuteDelegate = ed => this.AddMovies(),
+                CanExecuteDelegate = ced => CanAddMovies(),
+                ExecuteDelegate = ed => AddMovies(),
             };
-            this.ChangeMoviesCommand = new Command
+            ChangeMoviesCommand = new Command
             {
-                CanExecuteDelegate = ced => this.CanChangeMovies(),
-                ExecuteDelegate = ed => this.ChangeMovies(),
+                CanExecuteDelegate = ced => CanChangeMovies(),
+                ExecuteDelegate = ed => ChangeMovies(),
             };
-            this.ResetMoviesCommand = new Command
+            ResetMoviesCommand = new Command
             {
-                CanExecuteDelegate = ced => this.CanResetMovies(),
-                ExecuteDelegate = ed => this.ResetMovies(),
+                CanExecuteDelegate = ced => CanResetMovies(),
+                ExecuteDelegate = ed => ResetMovies(),
             };
 
-            this.Notification = "HELLO";
+            Notification = "HELLO";
         }
 
         private void AddMovies()
         {
             if (!CanAddMovies()) return;
-            this.Movies.AddRange(this.GetOtherMovies());
-            this.Notification = "Movies Added!";
-            this.moviesAdded = true;
+            Movies.AddRange(GetOtherMovies());
+            Notification = "Movies Added!";
+            moviesAdded = true;
         }
 
         private void ChangeMovies()
         {
             if (!CanChangeMovies()) return;
-            this.Movies = new ObservableCollection<MovieViewModel>(this.GetOtherMovies());
-            this.Notification = "Movies Changed!";
-            this.moviesChanged = true;
+            Movies = new ObservableCollection<MovieViewModel>(GetOtherMovies());
+            Notification = "Movies Changed!";
+            moviesChanged = true;
         }
 
         private void ResetMovies()
         {
             if (!CanResetMovies()) return;
-            this.Movies = this.GetCrazyAwesomeMovies();
-            this.Notification = "Movies Reset!";
-            this.moviesAdded = false;
-            this.moviesChanged = false;
+            Movies = GetCrazyAwesomeMovies();
+            Notification = "Movies Reset!";
+            moviesAdded = false;
+            moviesChanged = false;
         }
 
         private bool CanAddMovies()
         {
-            return !this.moviesAdded && !this.moviesChanged;
+            return !moviesAdded && !moviesChanged;
         }
 
         private bool CanChangeMovies()
         {
-            return !this.moviesChanged;
+            return !moviesChanged;
         }
 
         private bool CanResetMovies()
         {
-            return this.moviesAdded || this.moviesChanged;
+            return moviesAdded || moviesChanged;
         }
 
         private ObservableCollection<MovieViewModel> GetCrazyAwesomeMovies()

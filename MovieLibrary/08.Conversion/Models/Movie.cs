@@ -21,10 +21,10 @@ namespace MovieLibrary.Models
         public Movie(string title, DateTime release, IDirector director, double rating)
             : this()
         {
-            this.Title = title;
-            this.Release = release;
-            this.Director = director;
-            this.Rating = rating;
+            Title = title;
+            Release = release;
+            Director = director;
+            Rating = rating;
         }
 
         public Movie(string title, DateTime release, string director, double rating)

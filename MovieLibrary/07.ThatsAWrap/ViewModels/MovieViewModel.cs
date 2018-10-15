@@ -4,64 +4,64 @@ using MovieLibrary.Models;
 
 namespace MovieLibrary.ViewModels
 {
-    public class MovieViewModel : ObservableItem
+    public class MovieViewModel : ObservableObject
     {
         private readonly Movie movie;
         public string Title
         {
-            get { return this.title; }
+            get { return title; }
             set
             {
-                this.title = value;
-                this.OnPropertyChanged(() => this.Title);
+                title = value;
+                OnPropertyChanged();
             }
         }
 
         public DateTime Release
         {
-            get { return this.release; }
+            get { return release; }
             set
             {
-                this.release = value;
-                this.OnPropertyChanged(() => this.Release);
+                release = value;
+                OnPropertyChanged();
             }
         }
 
         public string DirectorName
         {
-            get { return this.directorName; }
+            get { return directorName; }
             set
             {
-                this.directorName = value;
-                this.OnPropertyChanged(() => this.DirectorName);
+                directorName = value;
+                OnPropertyChanged();
             }
         }
 
         public double Rating
         {
-            get { return this.rating; }
+            get { return rating; }
             set
             {
-                this.rating = value;
-                this.OnPropertyChanged(() => this.Rating);
+                rating = value;
+                OnPropertyChanged();
             }
         }
 
         internal MovieViewModel(Movie movie)
         {
             this.movie = movie;
-            this.Title = movie.Title;
-            this.Release = movie.Release;
-            this.DirectorName = movie.Director.ToString();
-            this.Rating = movie.Rating;
+            Title = movie.Title;
+            Release = movie.Release;
+            DirectorName = movie.Director.ToString();
+            Rating = movie.Rating;
         }
 
         public void Save()
         {
-            movie.Title = this.Title;
-            movie.Release = this.Release;
-            movie.Rating = this.Rating;
-            movie.Director = new Director(this.DirectorName);
+            movie.Title = Title;
+            movie.Release = Release;
+            movie.Rating = Rating;
+            movie.Director = new Director(DirectorName);
         }
 
         private string title;

@@ -1,24 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 namespace MovieLibrary
 {
-    public abstract class ObservableItem : INotifyPropertyChanged
+    public abstract class ObservableObject : INotifyPropertyChanged
     {
         private static readonly Dictionary<string, PropertyChangedEventArgs> eventArgCache;
 
-        static ObservableItem()
+        static ObservableObject()
         {
             eventArgCache = new Dictionary<string, PropertyChangedEventArgs>();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string propertyName)
+        protected virtual bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
-            var handler = this.PropertyChanged;
+            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
             if (null != handler)
             {
                 PropertyChangedEventArgs args = GetPropertyChangedEventArgs(propertyName);
@@ -26,23 +34,11 @@ namespace MovieLibrary
             }
         }
 
-        protected virtual void OnPropertyChanged<T>(Expression<Func<T>> expression)
-        {
-            var lambda = expression as LambdaExpression;
-
-            if (null == lambda) return;
-
-            var memberExpression = (lambda.Body is UnaryExpression)
-                ? ((UnaryExpression)lambda.Body).Operand as MemberExpression
-                : lambda.Body as MemberExpression;
-            this.OnPropertyChanged(memberExpression != null ? memberExpression.Member.Name : string.Empty);
-        }
-
         private static PropertyChangedEventArgs GetPropertyChangedEventArgs(string propertyName)
         {
             PropertyChangedEventArgs args;
 
-            lock (typeof(ObservableItem))
+            lock (typeof(ObservableObject))
             {
                 if (!eventArgCache.TryGetValue(propertyName, out args))
                 {

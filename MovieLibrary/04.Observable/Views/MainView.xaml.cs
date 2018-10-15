@@ -13,12 +13,12 @@ namespace MovieLibrary.Views
 
         private void OnAddButtonClicked(object sender, RoutedEventArgs e)
         {
-            (this.DataContext as MainViewModel).AddMovies();
+            (DataContext as MainViewModel).AddMovies();
         }
 
         private void OnChangeButtonClicked(object sender, RoutedEventArgs e)
         {
-            (this.DataContext as MainViewModel).ChangeMovies();
+            (DataContext as MainViewModel).ChangeMovies();
         }
     }
 }

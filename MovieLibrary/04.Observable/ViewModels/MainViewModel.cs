@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-
 using MovieLibrary.Models;
 
 namespace MovieLibrary.ViewModels
 {
-    public class MainViewModel : ObservableItem
+    public class MainViewModel : ObservableObject
     {
         private ObservableCollection<Movie> movies;
         public ObservableCollection<Movie> Movies
@@ -15,46 +14,46 @@ namespace MovieLibrary.ViewModels
             private set
             {
                 movies = value;
-                this.OnPropertyChanged(() => Movies);
+                OnPropertyChanged();
             }
         }
 
         private string notification;
         public string Notification
         {
-            get { return this.notification; }
+            get { return notification; }
             private set
             {
-                this.notification = value;
-                this.OnPropertyChanged(() => Notification);
+                notification = value;
+                OnPropertyChanged();
             }
         }
 
         public MainViewModel()
         {
-            this.Movies = this.GetCrazyAwesomeMovies();
-            this.Notification = "HELLO";
+            Movies = GetCrazyAwesomeMovies();
+            Notification = "HELLO";
         }
 
         private bool alreadyAdded = false;
         public void AddMovies()
         {
-            if (!this.alreadyAdded)
+            if (!alreadyAdded)
             {
-                this.Movies.AddRange(this.GetOtherMovies());
-                this.Notification = "Movies Added!";
-                this.alreadyAdded = true;
+                Movies.AddRange(GetOtherMovies());
+                Notification = "Movies Added!";
+                alreadyAdded = true;
             }
         }
 
         private bool alreadyChanged = false;
         public void ChangeMovies()
         {
-            if (!this.alreadyChanged)
+            if (!alreadyChanged)
             {
-                this.Movies = new ObservableCollection<Movie>(this.GetOtherMovies());
-                this.Notification = "Movies Changed!";
-                this.alreadyChanged = true;
+                Movies = new ObservableCollection<Movie>(GetOtherMovies());
+                Notification = "Movies Changed!";
+                alreadyChanged = true;
             }
         }
 

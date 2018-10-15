@@ -11,7 +11,7 @@ namespace MovieLibrary.ViewModels
 
         public MainViewModel()
         {
-            this.Movies = this.GetCrazyAwesomeMovies();
+            Movies = GetCrazyAwesomeMovies();
         }
 
         private bool alreadyDone = false;
@@ -19,7 +19,7 @@ namespace MovieLibrary.ViewModels
         {
             if (!alreadyDone)
             {
-                this.Movies.AddRange(this.GetOtherMovies());
+                Movies.AddRange(GetOtherMovies());
                 alreadyDone = true;
             }
         }

@@ -5,24 +5,24 @@
         private string name;
         public override string Name
         {
-            get { return this.name; }
+            get { return name; }
             set
             {
-                this.name = value;
-                this.OnPropertyChanged(() => Name);
+                name = value;
+                OnPropertyChanged();
             }
         }
 
         public override string ToString()
         {
-            return "** " + this.Name + " **";
+            return "** " + Name + " **";
         }
 
         public Director() { }
 
         public Director(string name)
         {
-            this.Name = name;
+            Name = name;
         }
     }
 }

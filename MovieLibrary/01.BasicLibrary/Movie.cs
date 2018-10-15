@@ -21,10 +21,10 @@ namespace MovieLibrary
 
         public Movie(string title, DateTime release, string director, double rating)
         {
-            this.Title = title;
-            this.Release = release;
-            this.Director = director;
-            this.Rating = rating;
+            Title = title;
+            Release = release;
+            Director = director;
+            Rating = rating;
         }
     }
 }

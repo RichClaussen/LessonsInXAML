@@ -14,12 +14,12 @@ namespace MovieLibrary.Views
         public MainView()
         {
             InitializeComponent();
-            this.DataContext = new MainViewModel();
+            DataContext = new MainViewModel();
         }
 
         private void OnButtonClicked(object sender, RoutedEventArgs e)
         {
-            this.ViewModel.AddMovies();
+            ViewModel.AddMovies();
         }
     }
 }

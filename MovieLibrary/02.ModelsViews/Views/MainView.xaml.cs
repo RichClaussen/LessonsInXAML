@@ -14,7 +14,7 @@ namespace MovieLibrary.Views
         {
             InitializeComponent();
 
-            this.Movies = GetCrazyAwesomeMovies();
+            Movies = GetCrazyAwesomeMovies();
         }
 
         private bool alreadyDone = false;
@@ -22,7 +22,7 @@ namespace MovieLibrary.Views
         {
             if (!alreadyDone)
             {
-                this.Movies.AddRange(GetOtherMovies());
+                Movies.AddRange(GetOtherMovies());
                 alreadyDone = true;
             }
         }
